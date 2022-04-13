@@ -38,12 +38,13 @@ public class NLauncher : Control
         string ver = GetNode<OptionButton>("NMonoScreen/VersionList").GetItemText(GetNode<OptionButton>("NMonoScreen/VersionList").GetSelectedId());
 		HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoVerSelect");
         httpRequest.DownloadFile =  "nmono" + ver + ".exe";
-        string ver1 = ver.Substring(ver.IndexOf(".")+1); // (version.)NUMBER
+        string ver1 = ver.Substring(ver.IndexOf(".")+1).Trim(); // (version.)NUMBER
         /* if installer available */
-        if (ver1.ToInt() < 5) {
-        
-            httpRequest.Request("https://github.com/thekaigonzalez/NFyMono/releases/download/" + ver + "/NFyMonoSetup.exe");
-            OS.ShellOpen("nmono" + ver + ".exe");
+        if (ver1 != "version.5.macos.beta") {
+            if (ver1.ToInt() < 5) {
+                httpRequest.Request("https://github.com/thekaigonzalez/NFyMono/releases/download/" + ver + "/NFyMonoSetup.exe");
+                OS.ShellOpen("nmono" + ver + ".exe");
+            }
         }
 
     }
